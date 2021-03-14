@@ -3,7 +3,8 @@ import { getters } from "./getters";
 import { mutations } from "./mutations";
 
 export const state = {
-  user: null
+  user: null,
+  error: null
 };
 
 export const signUp = {

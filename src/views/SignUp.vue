@@ -6,33 +6,34 @@
     <div class="container">
       <div></div>
       <div class="content-wrapper">
-        <div class="content">
+        <div class="content" @submit.prevent="">
           <h1 class="title">Sign Up</h1>
           <div class="category">
-            <div class="category-item">
+            <button class="category-item">
               Byer
-            </div>
-            <div class="category-item">
+            </button>
+            <button class="category-item">
               Manager
-            </div>
+            </button>
           </div>
-          <div class="input-container">
-            <p>Login</p>
+          <p class="error-message">{{ authMessage }}</p>
+          <div class="input-container ">
+            <label>Login</label>
             <input type="text" placeholder="Login" v-model="newUser.login" />
           </div>
           <div class="input-container">
-            <p>Email</p>
+            <label>Email</label>
             <input type="email" placeholder="Email" v-model="newUser.email" />
           </div>
-          <div class="input-container">
-            <p>Password</p>
+          <div class="input-container form-item">
+            <label>Password</label>
             <input
               type="password"
               placeholder="Password"
               v-model="newUser.password"
             />
           </div>
-          <button :disabled="disabled" @click="signUp(newUser)">Sign Up</button>
+          <button class="button-sign-up" @click="signUp(newUser)">Sign Up</button>
         </div>
       </div>
     </div>
@@ -40,7 +41,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 export default {
   name: "SignUp",
   data() {
@@ -50,13 +51,20 @@ export default {
         password: "",
         email: "",
         seller: false
-      },
-      disabled: false
+      }
     };
   },
   computed: {
-    ...mapActions(["signUp"]),
-    ...mapGetters(["authMessage"])
+    ...mapGetters(["authMessage", "dis"])
+  },
+  methods: {
+    signUp(newUser) {
+      if (this.$v.$invalid) {
+        this.$v.$touch();
+        return;
+      }
+      this.$store.dispatch("signUp", newUser);
+    }
   }
 };
 </script>
@@ -111,14 +119,20 @@ export default {
   width: 100px;
   height: 150px;
   border: 2px solid #d3d3d3;
+  background: #fff;
   border-radius: 4px;
   text-align: center;
   padding-top: 50px;
   font-size: 20px;
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+  transition: border 9999999s;
 }
 
-.category-item:enabled {
+.category-item:active {
   border-color: #72e1c9;
+  transition: border 0s;
 }
 
 .title {
@@ -136,14 +150,7 @@ input {
   color: #595959;
 }
 
-button:disabled {
-  margin-top: 50px;
-  border-radius: 3px;
-  height: 30px;
-  border: 1px solid #d3d3d3;
-}
-
-button:enabled {
+.button-sign-up {
   background: #72e1c9;
   border-color: #72e1c9;
   margin-top: 50px;

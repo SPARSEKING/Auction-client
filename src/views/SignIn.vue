@@ -8,6 +8,7 @@
       <div class="content-wrapper">
         <div class="content">
           <h1 class="title">Sign In</h1>
+          <p class="error-message">{{ signInMessage }}</p>
           <div class="input-container">
             <p>Login</p>
             <input type="text" placeholder="Login" v-model="user.login" />
@@ -20,7 +21,7 @@
               v-model="user.password"
             />
           </div>
-          <button :disabled="disabled">Sign In</button>
+          <button @click="signIn(user)">Sign In</button>
         </div>
       </div>
     </div>
@@ -28,21 +29,36 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
-  name: "SignUn",
+  name: "SignIn",
   data() {
     return {
       user: {
         login: "",
         password: ""
-      },
-      disabled: true
+      }
     };
+  },
+  computed: {
+    ...mapGetters(["signInMessage"])
+  },
+  methods: {
+    signIn(user) {
+      this.$store.dispatch("signIn", user);
+      this.user.login = this.user.password = "";
+    }
   }
 };
 </script>
 
 <style scoped>
+.error-message {
+  color: red;
+  text-align: center;
+  margin: 5px;
+}
+
 .wrapper {
   font-family: Arial, Helvetica, sans-serif;
   background-color: #435b75;
