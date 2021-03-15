@@ -9,31 +9,47 @@
         <div class="content" @submit.prevent="">
           <h1 class="title">Sign Up</h1>
           <div class="category">
-            <button class="category-item">
+            <button
+              class="category-item"
+              :class="{ chonsen: newUser.seller == false }"
+              @click="newUser.seller = false"
+            >
               Byer
             </button>
-            <button class="category-item">
+            <button
+              class="category-item"
+              :class="{ chonsen: newUser.seller == true }"
+              @click="newUser.seller = true"
+            >
               Manager
             </button>
           </div>
           <p class="error-message">{{ authMessage }}</p>
-          <div class="input-container ">
-            <label>Login</label>
-            <input type="text" placeholder="Login" v-model="newUser.login" />
-          </div>
-          <div class="input-container">
-            <label>Email</label>
-            <input type="email" placeholder="Email" v-model="newUser.email" />
-          </div>
-          <div class="input-container form-item">
-            <label>Password</label>
-            <input
-              type="password"
-              placeholder="Password"
-              v-model="newUser.password"
-            />
-          </div>
-          <button class="button-sign-up" @click="signUp(newUser)">Sign Up</button>
+          <v-text-field
+            class="errorText"
+            v-model="newUser.login"
+            :counter="6"
+            :rules="loginRules"
+            label="Login"
+            required
+          ></v-text-field>
+          <v-text-field
+            v-model="newUser.email"
+            :rules="emailRules"
+            label="E-mail"
+            text-color:red
+            required
+          ></v-text-field>
+          <v-text-field
+            v-model="newUser.password"
+            :rules="passwordRules"
+            label="Password"
+            color="error"
+            required
+          ></v-text-field>
+          <button class="button-sign-up" @click="signUp(newUser), validate">
+            Sign Up
+          </button>
         </div>
       </div>
     </div>
@@ -51,29 +67,50 @@ export default {
         password: "",
         email: "",
         seller: false
-      }
+      },
+      loginRules: [
+        v => !!v || "Login is required",
+        v => (v && v.length >= 6) || "Login must be less than 6 characters"
+      ],
+      emailRules: [
+        v => !!v || "E-mail is required",
+        v => /.+@.+\..+/.test(v) || "E-mail must be valid"
+      ],
+      passwordRules: [
+        v => !!v || "Password is required",
+        v => (v && v.length >= 8) || "Password must be less than 8 characters"
+      ]
     };
   },
   computed: {
-    ...mapGetters(["authMessage", "dis"])
+    ...mapGetters(["authMessage"])
   },
   methods: {
     signUp(newUser) {
-      if (this.$v.$invalid) {
-        this.$v.$touch();
-        return;
-      }
       this.$store.dispatch("signUp", newUser);
+      this.newUser.login = this.newUser.email = this.newUser.password = "";
+    },
+    validate() {
+      this.$refs.form.validate();
     }
   }
 };
 </script>
 
 <style scoped>
+.error--text {
+  color: #ff5252 !important;
+  caret-color: #ff5252 !important;
+}
+
 .wrapper {
   font-family: Arial, Helvetica, sans-serif;
   background-color: #435b75;
   height: 100vh;
+}
+
+.chonsen {
+  border: 2px solid #72e1c9 !important;
 }
 
 .logo {
@@ -124,30 +161,10 @@ export default {
   text-align: center;
   padding-top: 50px;
   font-size: 20px;
-  cursor: pointer;
-  user-select: none;
-  outline: none;
-  transition: border 9999999s;
-}
-
-.category-item:active {
-  border-color: #72e1c9;
-  transition: border 0s;
 }
 
 .title {
   text-align: center;
-}
-
-input {
-  width: 100%;
-  border: 1px solid #d3d3d3;
-  border-radius: 3px;
-  height: 30px;
-}
-.input-container {
-  margin-top: 10px;
-  color: #595959;
 }
 
 .button-sign-up {
@@ -158,7 +175,10 @@ input {
   height: 30px;
 }
 
-p {
-  margin: 5px;
+.error-message {
+  padding-top: 10px;
+  color: rgb(238, 79, 79);
+  text-align: center;
+  font-size: 13px;
 }
 </style>

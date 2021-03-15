@@ -9,18 +9,8 @@
         <div class="content">
           <h1 class="title">Sign In</h1>
           <p class="error-message">{{ signInMessage }}</p>
-          <div class="input-container">
-            <p>Login</p>
-            <input type="text" placeholder="Login" v-model="user.login" />
-          </div>
-          <div class="input-container">
-            <p>Password</p>
-            <input
-              type="password"
-              placeholder="Password"
-              v-model="user.password"
-            />
-          </div>
+          <v-text-field v-model="user.login" label="Login"></v-text-field>
+          <v-text-field v-model="user.password" label="Password"></v-text-field>
           <button @click="signIn(user)">Sign In</button>
         </div>
       </div>
