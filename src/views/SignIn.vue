@@ -10,7 +10,18 @@
           <h1 class="title">Sign In</h1>
           <p class="error-message">{{ signInMessage }}</p>
           <v-text-field v-model="user.login" label="Login"></v-text-field>
-          <v-text-field v-model="user.password" label="Password"></v-text-field>
+          <v-text-field
+            :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+            :rules="[rules.required, rules.min]"
+            :type="show ? 'text' : 'password'"
+            name="input-10-2"
+            label="Password"
+            hint="At least 8 characters"
+            value=""
+            class="input-group--focused"
+            @click:append="show = !show"
+            v-model="user.password"
+          ></v-text-field>
           <button @click="signIn(user)">Sign In</button>
         </div>
       </div>
@@ -27,6 +38,11 @@ export default {
       user: {
         login: "",
         password: ""
+      },
+      show: false,
+      rules: {
+        required: value => !!value || "Required.",
+        min: v => v.length >= 8 || "Min 8 characters"
       }
     };
   },
@@ -61,8 +77,8 @@ export default {
 }
 
 .navbar {
-  padding: 15px;
-  margin-bottom: 30px;
+  padding: 20px;
+  margin-left: 100px;
 }
 
 .container {

@@ -28,6 +28,7 @@ export default {
 .wrapper-content {
   margin-top: 30px;
   background-color: #fbfcfe;
+  height: 100vh;
 }
 
 .wrapper-links {
@@ -77,6 +78,7 @@ export default {
   font-size: 30px;
 }
 .navbar {
-  padding: 15px;
+  margin-top: 20px;
+  margin-left: 100px;
 }
 </style>

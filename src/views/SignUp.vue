@@ -41,11 +41,16 @@
             required
           ></v-text-field>
           <v-text-field
-            v-model="newUser.password"
-            :rules="passwordRules"
+            :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+            :rules="[rules.required, rules.min]"
+            :type="show ? 'text' : 'password'"
+            name="input-10-2"
             label="Password"
-            color="error"
-            required
+            hint="At least 8 characters"
+            value=""
+            class="input-group--focused"
+            @click:append="show = !show"
+            v-model="newUser.password"
           ></v-text-field>
           <button class="button-sign-up" @click="signUp(newUser), validate">
             Sign Up
@@ -68,6 +73,7 @@ export default {
         email: "",
         seller: false
       },
+      show: false,
       loginRules: [
         v => !!v || "Login is required",
         v => (v && v.length >= 6) || "Login must be less than 6 characters"
@@ -76,10 +82,10 @@ export default {
         v => !!v || "E-mail is required",
         v => /.+@.+\..+/.test(v) || "E-mail must be valid"
       ],
-      passwordRules: [
-        v => !!v || "Password is required",
-        v => (v && v.length >= 8) || "Password must be less than 8 characters"
-      ]
+      rules: {
+        required: value => !!value || "Required.",
+        min: v => v.length >= 8 || "Min 8 characters"
+      }
     };
   },
   computed: {
@@ -119,8 +125,8 @@ export default {
 }
 
 .navbar {
-  padding: 15px;
-  margin-bottom: 30px;
+  padding: 20px;
+  margin-left: 100px;
 }
 
 .container {
