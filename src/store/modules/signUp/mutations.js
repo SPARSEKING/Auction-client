@@ -5,7 +5,7 @@ export const mutations = {
     state.user = payload;
     state.error = null;
     if (!payload.redirect) {
-      router.push({ name: "Auction" });
+      router.push({ name: "ContentPage" });
     }
   },
   errorMessage(state, payload) {

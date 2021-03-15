@@ -3,7 +3,8 @@ import VueRouter from "vue-router";
 import SignIn from "@/views/SignIn.vue";
 import SignUp from "@/views/SignUp.vue";
 import MainPage from "@/views/MainPage.vue";
-import AuctionPage from "@/views/AuctionPage.vue";
+import ContentPage from "@/views/ContentPage.vue";
+import Profile from "@/views/Profile.vue";
 
 Vue.use(VueRouter);
 
@@ -24,9 +25,14 @@ const routes = [
     component: MainPage
   },
   {
-    path: "/auction",
-    name: "Auction",
-    component: AuctionPage
+    path: "/content",
+    name: "ContentPage",
+    component: ContentPage
+  },
+  {
+    path: "/content/profile",
+    name: "Profile",
+    component: Profile
   }
 ];
 
@@ -34,6 +40,18 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes
+});
+
+router.beforeEach(function(to, _from, next) {
+  if (to.path === "/content") {
+    if (localStorage.getItem("UserData")) {
+      next();
+    } else {
+      next("/");
+    }
+    next();
+  }
+  next();
 });
 
 export default router;

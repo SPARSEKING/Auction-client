@@ -1,64 +1,66 @@
 <template>
-  <div class="wrapper">
-    <div class="navbar">
-      <h1 class="logo">Logo</h1>
-    </div>
-    <div class="container">
-      <div></div>
-      <div class="content-wrapper">
-        <div class="content" @submit.prevent="">
-          <h1 class="title">Sign Up</h1>
-          <div class="category">
-            <button
-              class="category-item"
-              :class="{ chonsen: newUser.seller == false }"
-              @click="newUser.seller = false"
-            >
-              Byer
-            </button>
-            <button
-              class="category-item"
-              :class="{ chonsen: newUser.seller == true }"
-              @click="newUser.seller = true"
-            >
-              Manager
+  <v-app>
+    <div class="wrapper">
+      <div class="navbar">
+        <h1 class="logo">Logo</h1>
+      </div>
+      <div class="container">
+        <div></div>
+        <div class="content-wrapper">
+          <div class="content" @submit.prevent="">
+            <h1 class="title">Sign Up</h1>
+            <div class="category">
+              <button
+                class="category-item"
+                :class="{ chonsen: newUser.seller == false }"
+                @click="newUser.seller = false"
+              >
+                Byer
+              </button>
+              <button
+                class="category-item"
+                :class="{ chonsen: newUser.seller == true }"
+                @click="newUser.seller = true"
+              >
+                Manager
+              </button>
+            </div>
+            <p class="error-message">{{ authMessage }}</p>
+            <v-text-field
+              class="errorText"
+              v-model="newUser.login"
+              :counter="6"
+              :rules="loginRules"
+              label="Login"
+              required
+            ></v-text-field>
+            <v-text-field
+              v-model="newUser.email"
+              :rules="emailRules"
+              label="E-mail"
+              text-color:red
+              required
+            ></v-text-field>
+            <v-text-field
+              :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+              :rules="[rules.required, rules.min]"
+              :type="show ? 'text' : 'password'"
+              name="input-10-2"
+              label="Password"
+              hint="At least 8 characters"
+              value=""
+              class="input-group--focused"
+              @click:append="show = !show"
+              v-model="newUser.password"
+            ></v-text-field>
+            <button class="button-sign-up" @click="signUp(newUser)">
+              Sign Up
             </button>
           </div>
-          <p class="error-message">{{ authMessage }}</p>
-          <v-text-field
-            class="errorText"
-            v-model="newUser.login"
-            :counter="6"
-            :rules="loginRules"
-            label="Login"
-            required
-          ></v-text-field>
-          <v-text-field
-            v-model="newUser.email"
-            :rules="emailRules"
-            label="E-mail"
-            text-color:red
-            required
-          ></v-text-field>
-          <v-text-field
-            :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-            :rules="[rules.required, rules.min]"
-            :type="show ? 'text' : 'password'"
-            name="input-10-2"
-            label="Password"
-            hint="At least 8 characters"
-            value=""
-            class="input-group--focused"
-            @click:append="show = !show"
-            v-model="newUser.password"
-          ></v-text-field>
-          <button class="button-sign-up" @click="signUp(newUser), validate">
-            Sign Up
-          </button>
         </div>
       </div>
     </div>
-  </div>
+  </v-app>
 </template>
 
 <script>
