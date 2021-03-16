@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app id="v-app">
     <v-bottom-navigation
       :value="value"
       color="teal"
@@ -26,7 +26,7 @@
         </v-btn>
       </div>
       <div>
-        <router-link to="/content/profile">
+        <router-link :to="{ path: 'profile' }" append>
           <v-chip class="ma-2" color="teal" outlined pill>
             {{ userName }}
             <v-icon right>
@@ -47,7 +47,7 @@
 import router from "@/router/index.js";
 
 export default {
-  name: "SignIn",
+  name: "Navbar",
   data() {
     return {
       value: "recent",
@@ -69,6 +69,10 @@ export default {
 </script>
 
 <style scoped>
+#v-app {
+  height: 56px;
+}
+
 .button {
   background-color: #fff;
 }
