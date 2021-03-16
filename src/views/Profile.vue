@@ -20,22 +20,45 @@
             <div class="user-info user">
               <h3>Basic information</h3>
               <div class="input-items">
-                <v-text-field color="#4DB6AC" label="First name"></v-text-field>
+                <v-text-field
+                  color="#4DB6AC"
+                  v-model="changedData.firstName"
+                  label="First name"
+                ></v-text-field>
                 <v-text-field
                   color="#4DB6AC"
                   label="Second name"
+                  v-model="changedData.secondName"
                 ></v-text-field>
-                <v-text-field color="#4DB6AC" label="Email"></v-text-field>
+                <v-text-field
+                  color="#4DB6AC"
+                  v-model="changedData.email"
+                  label="Email"
+                ></v-text-field>
                 <v-text-field
                   color="#4DB6AC"
                   label="Phone number"
+                  v-model="changedData.phoneNumber"
                 ></v-text-field>
               </div>
               <h3>Additional information</h3>
               <div class="container-info">
-                <v-text-field color="#4DB6AC" label="City"></v-text-field>
-                <v-text-field color="#4DB6AC" label="Country"></v-text-field>
-                <v-btn class="ma-2 change-password" outlined color="#4DB6AC">
+                <v-text-field
+                  color="#4DB6AC"
+                  v-model="changedData.city"
+                  label="City"
+                ></v-text-field>
+                <v-text-field
+                  color="#4DB6AC"
+                  v-model="changedData.country"
+                  label="Country"
+                ></v-text-field>
+                <v-btn
+                  class="ma-2 change-password"
+                  outlined
+                  color="#4DB6AC"
+                  @click="changeInformation(changedData)"
+                >
                   Change information
                 </v-btn>
               </div>
@@ -53,6 +76,7 @@
                   value=""
                   class="input-group--focused"
                   @click:append="show = !show"
+                  v-model="changedPassword.password"
                 ></v-text-field>
                 <v-btn class="ma-2 change-password" outlined color="#4DB6AC">
                   Change password
@@ -67,19 +91,41 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
 export default {
   name: "Profile",
   data() {
     return {
+      changedData: {
+        firstName: "",
+        secondName: "",
+        email: "",
+        phoneNumber: "",
+        city: "",
+        country: ""
+      },
+      changedPassword: {
+        password: "",
+        login: ""
+      },
       selectedFile: null,
       show: false
     };
   },
+  computed: {
+    ...mapGetters(["getData"])
+  },
   methods: {
+    ...mapActions(["changeInformation"]),
     onFileSelected(event) {
       const image = event.target.files[0];
       this.selectedFile = image.name;
     }
+  },
+  created() {
+    const getUserData = JSON.parse(localStorage.getItem("UserData"));
+    this.changedData.email = getUserData.candidate.email;
+    this.changedPassword.login = getUserData.candidate.login;
   }
 };
 </script>
