@@ -5,16 +5,25 @@
         <div class="content-wrapper">
           <div class="profile-container">
             <div class="user-photo">
-              <v-btn icon x-large class="btn" @click="$refs.inputUpload.click()"
-                >Photo</v-btn
+              <v-btn
+                icon
+                x-large
+                class="btn"
+                @click="$refs.inputUpload.click()"
               >
+                <v-img
+                  class="avatar"
+                  height="150"
+                  width="150"
+                  :src="changedData.imageUrl"
+                ></v-img>
+              </v-btn>
               <input
                 v-show="false"
                 ref="inputUpload"
                 type="file"
                 @change="onFileSelected"
               />
-              <p>{{ selectedFile }}</p>
             </div>
             <div class="v-line"></div>
             <div class="user-info user">
@@ -73,12 +82,16 @@
                   color="#4DB6AC"
                   name="input-10-2"
                   label="Password"
-                  value=""
                   class="input-group--focused"
                   @click:append="show = !show"
-                  v-model="changedPassword.password"
+                  v-model="newPassword.password"
                 ></v-text-field>
-                <v-btn class="ma-2 change-password" outlined color="#4DB6AC">
+                <v-btn
+                  class="ma-2 change-password"
+                  outlined
+                  color="#4DB6AC"
+                  @click="updatePassword(newPassword)"
+                >
                   Change password
                 </v-btn>
               </div>
@@ -102,13 +115,14 @@ export default {
         email: "",
         phoneNumber: "",
         city: "",
-        country: ""
+        country: "",
+        imageUrl: this.img
       },
-      changedPassword: {
-        password: "",
-        login: ""
+      newPassword: {
+        password: ""
       },
       selectedFile: null,
+      img: null,
       show: false
     };
   },
@@ -116,16 +130,22 @@ export default {
     ...mapGetters(["getData"])
   },
   methods: {
-    ...mapActions(["changeInformation"]),
+    ...mapActions(["changeInformation", "getInformation", "updatePassword"]),
     onFileSelected(event) {
       const image = event.target.files[0];
       this.selectedFile = image.name;
+      const fileReader = new FileReader();
+      fileReader.addEventListener("load", () => {
+        this.changedData.imageUrl = fileReader.result;
+      });
+      fileReader.readAsDataURL(image);
+      this.img = toString(image);
     }
   },
   created() {
-    const getUserData = JSON.parse(localStorage.getItem("UserData"));
-    this.changedData.email = getUserData.candidate.email;
-    this.changedPassword.login = getUserData.candidate.login;
+    this.getInformation().then(() => {
+      this.changedData = this.getData;
+    });
   }
 };
 </script>
@@ -136,6 +156,10 @@ export default {
   flex-direction: column;
   justify-content: space-between;
   height: 200px;
+}
+
+.avatar {
+  border-radius: 50%;
 }
 
 .container-password {

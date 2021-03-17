@@ -60,10 +60,9 @@ export default {
       localStorage.removeItem("UserData");
     }
   },
-  created() {
-    const getName = JSON.parse(localStorage.getItem("UserData"));
-    this.userName = getName.candidate.login;
-    console.log(this.userName);
+  async created() {
+    const getName = await JSON.parse(localStorage.getItem("UserData"));
+    this.userName = getName.userLogin;
   }
 };
 </script>

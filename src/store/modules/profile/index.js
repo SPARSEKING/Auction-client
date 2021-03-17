@@ -4,10 +4,10 @@ import { mutations } from "./mutations";
 
 export const state = {
   changedData: null,
-  changedPassword: null
+  newPassword: null
 };
 
-export const signIn = {
+export const profile = {
   state,
   getters,
   actions,

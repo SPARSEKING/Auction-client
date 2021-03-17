@@ -5,7 +5,7 @@ export const mutations = {
     state.user = payload;
     state.error = null;
     if (!payload.redirect) {
-      router.push({ name: "ContentPage" });
+      router.push({ name: "SignIn" });
     }
   },
   errorMessage(state, payload) {

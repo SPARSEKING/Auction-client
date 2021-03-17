@@ -2,14 +2,13 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-import Vuelidate from "vuelidate";
 import "@/assets/utils/reset.css";
 import vuetify from "./plugins/vuetify";
-
-//Plugins
-Vue.use(Vuelidate);
+import axiosSetup from "./plugins/axios";
 
 Vue.config.productionTip = false;
+
+axiosSetup(store);
 
 new Vue({
   router,
