@@ -5,22 +5,17 @@
         <div class="content-wrapper">
           <div class="profile-container">
             <div class="user-photo">
-              <v-btn
-                icon
-                x-large
-                class="btn"
-                @click="$refs.inputUpload.click()"
-              >
+              <v-btn icon x-large class="btn" @click="triggerUpload">
                 <v-img
                   class="avatar"
                   height="150"
                   width="150"
-                  :src="changedData.imageUrl"
+                  :src="changedData.imageSrc"
                 ></v-img>
               </v-btn>
               <input
                 v-show="false"
-                ref="inputUpload"
+                ref="fileInput"
                 type="file"
                 @change="onFileSelected"
               />
@@ -66,7 +61,7 @@
                   class="ma-2 change-password"
                   outlined
                   color="#4DB6AC"
-                  @click="changeInformation(changedData)"
+                  @click="changeInformation({ changedData, image })"
                 >
                   Change information
                 </v-btn>
@@ -116,13 +111,13 @@ export default {
         phoneNumber: "",
         city: "",
         country: "",
-        imageUrl: this.img
+        imageSrc: ""
       },
       newPassword: {
         password: ""
       },
       selectedFile: null,
-      img: null,
+      image: null,
       show: false
     };
   },
@@ -132,14 +127,16 @@ export default {
   methods: {
     ...mapActions(["changeInformation", "getInformation", "updatePassword"]),
     onFileSelected(event) {
-      const image = event.target.files[0];
-      this.selectedFile = image.name;
-      const fileReader = new FileReader();
-      fileReader.addEventListener("load", () => {
-        this.changedData.imageUrl = fileReader.result;
-      });
-      fileReader.readAsDataURL(image);
-      this.img = toString(image);
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.changedData.imageSrc = reader.result;
+      };
+      reader.readAsDataURL(file);
+      this.image = file;
+    },
+    triggerUpload() {
+      this.$refs.fileInput.click();
     }
   },
   created() {

@@ -5,6 +5,7 @@ import SignUp from "@/views/SignUp.vue";
 import MainPage from "@/views/MainPage.vue";
 import ContentPage from "@/views/ContentPage.vue";
 import Profile from "@/views/Profile.vue";
+import AuctionsPage from "@/views/AuctionsPage.vue";
 
 Vue.use(VueRouter);
 
@@ -33,6 +34,11 @@ const routes = [
         path: "profile",
         name: "Profile",
         component: Profile
+      },
+      {
+        path: "auctions",
+        name: "Auctions",
+        component: AuctionsPage
       }
     ]
   }

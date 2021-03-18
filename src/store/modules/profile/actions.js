@@ -2,7 +2,15 @@ import axios from "axios";
 
 export const actions = {
   async changeInformation({ commit }, payload) {
-    const response = await axios.put("content/profile", payload);
+    if (payload.image !== null) {
+      const postData = new FormData();
+      postData.append("image", payload.image);
+      await axios.put("content/profile/image", postData);
+    }
+    const response = await axios.put("content/profile", {
+      ...payload.changedData,
+      imageUrl: ""
+    });
     console.log(response);
     commit("changeInformation", response.data);
   },

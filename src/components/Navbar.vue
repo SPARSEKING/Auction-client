@@ -13,11 +13,12 @@
           <v-icon>mdi-domain</v-icon>
         </v-btn>
 
-        <v-btn class="color: white">
-          <span>Auctions</span>
-
-          <v-icon>mdi-gavel</v-icon>
-        </v-btn>
+        <router-link :to="{ name: 'Auctions' }" append>
+          <v-btn class="color: white">
+            <span>Auctions</span>
+            <v-icon>mdi-gavel</v-icon>
+          </v-btn>
+        </router-link>
 
         <v-btn class="color: white">
           <span>My vehicles</span>
@@ -26,7 +27,7 @@
         </v-btn>
       </div>
       <div>
-        <router-link :to="{ path: 'profile' }" append>
+        <router-link :to="{ name: 'Profile' }" append>
           <v-chip class="ma-2" color="teal" outlined pill>
             {{ userName }}
             <v-icon right>
