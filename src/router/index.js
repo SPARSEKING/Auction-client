@@ -6,6 +6,8 @@ import MainPage from "@/views/MainPage.vue";
 import ContentPage from "@/views/ContentPage.vue";
 import Profile from "@/views/Profile.vue";
 import AuctionsPage from "@/views/AuctionsPage.vue";
+import UserVehicles from "@/views/UserVehicles.vue";
+import NewVehicle from "@/views/NewVehicle.vue";
 
 Vue.use(VueRouter);
 
@@ -39,6 +41,16 @@ const routes = [
         path: "auctions",
         name: "Auctions",
         component: AuctionsPage
+      },
+      {
+        path: "vehicles",
+        name: "MyVehicles",
+        component: UserVehicles
+      },
+      {
+        path: "newvehicle",
+        name: "NewVehicle",
+        component: NewVehicle
       }
     ]
   }

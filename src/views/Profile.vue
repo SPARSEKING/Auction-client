@@ -5,7 +5,7 @@
         <div class="content-wrapper">
           <div class="profile-container">
             <div class="user-photo">
-              <v-btn icon x-large class="btn" @click="triggerUpload">
+              <v-btn icon x-large id="btn" @click="triggerUpload">
                 <v-img
                   class="avatar"
                   height="150"
@@ -46,7 +46,7 @@
                 ></v-text-field>
               </div>
               <h3>Additional information</h3>
-              <div class="container-info">
+              <div class="container-information">
                 <v-text-field
                   color="#4DB6AC"
                   v-model="changedData.city"
@@ -148,7 +148,7 @@ export default {
 </script>
 
 <style scoped>
-.container-info {
+.container-information {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -170,11 +170,13 @@ export default {
   margin-top: 10px;
 }
 
-.btn {
-  height: 150px;
+#btn {
+  margin-right: 20px;
+  height: 150px !important;
   width: 150px;
   background: #4db6ac;
 }
+
 #vvv {
   height: 100vh;
   background: #e0f2f1;
@@ -221,5 +223,9 @@ export default {
 .profile-container {
   display: flex;
   padding: 30px;
+}
+
+.input-items {
+  padding-bottom: 20px;
 }
 </style>

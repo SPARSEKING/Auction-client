@@ -8,7 +8,7 @@
       <h1>AutoSale</h1>
       <div>
         <v-btn class="color: white">
-          <span>Vehicles</span>
+          <span>About Us</span>
 
           <v-icon>mdi-domain</v-icon>
         </v-btn>
@@ -20,11 +20,12 @@
           </v-btn>
         </router-link>
 
-        <v-btn class="color: white">
-          <span>My vehicles</span>
-
-          <v-icon>mdi-home</v-icon>
-        </v-btn>
+        <router-link :to="{ name: 'MyVehicles' }" append>
+          <v-btn class="color: white">
+            <span>My vehicles</span>
+            <v-icon>mdi-home</v-icon>
+          </v-btn>
+        </router-link>
       </div>
       <div>
         <router-link :to="{ name: 'Profile' }" append>
@@ -69,6 +70,10 @@ export default {
 </script>
 
 <style scoped>
+.v-btn--active {
+  color: rgb(77, 182, 172) !important;
+}
+
 #v-app {
   height: 56px;
 }

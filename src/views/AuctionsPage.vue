@@ -1,5 +1,5 @@
 <template>
-  <v-app class="wrapper">
+  <v-app id="wrapper">
     <div class="wrapper-content">
       <div class="content">
         <div class="search-container">
@@ -14,13 +14,7 @@
             solo
             class="search-item"
           ></v-text-field>
-          <v-btn
-            class="ma-2"
-            :loading="loading"
-            :disabled="loading"
-            color="#4DB6AC"
-            @click="loader = 'loading'"
-          >
+          <v-btn class="ma-2" color="#4DB6AC">
             Search
           </v-btn>
         </div>
@@ -31,7 +25,7 @@
                 <template v-slot:activator>
                   <v-list-item-title>Make</v-list-item-title>
                 </template>
-                <v-list-item v-for="(make, i) in makes" :key="i" link>
+                <v-list-item v-for="(make, i) in lots" :key="i" link>
                   <v-list-item-title
                     class="item"
                     v-text="make"
@@ -41,7 +35,16 @@
             </div>
           </div>
           <div class="container-lots">
-            <car-lot v-for="make in makes" :key="make" class="car-lot" />
+            <car-lot :lots="allVehicles" class="car-lot" />
+            <div class="text-center">
+              <v-pagination
+                @input="pageChangeHandler"
+                v-model="page"
+                :length="pageCount"
+                :total-visible="7"
+                color="#b2dfdb"
+              ></v-pagination>
+            </div>
           </div>
         </div>
       </div>
@@ -50,28 +53,43 @@
 </template>
 
 <script>
+import paginationMixin from "@/mixins/pagination.mixin";
 import CarLot from "../components/CarLot.vue";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "Auctions",
+  mixins: [paginationMixin],
   components: {
     CarLot
   },
   data() {
     return {
-      makes: ["Audi", "BMW", "Mercedes"]
+      allVehicles: []
     };
+  },
+  computed: {
+    ...mapGetters(["getInformation"])
+  },
+  methods: {
+    ...mapActions(["getAllVehicles"])
+  },
+  created() {
+    this.getAllVehicles().then(() => {
+      this.allVehicles = this.getInformation;
+    });
+  },
+  mounted() {
+    this.setupPagination(this.allVehicles);
   }
 };
 </script>
 
-<style scoped>
-.car-lot {
-  margin-bottom: 30px;
-}
+<style>
 .item {
   color: #757575;
 }
+
 .v-input {
   max-width: 310px !important;
 }
@@ -85,7 +103,7 @@ export default {
   height: 48px !important;
 }
 
-.wrapper {
+#wrapper {
   background: #e0f2f1;
 }
 
@@ -105,13 +123,13 @@ export default {
   align-items: center;
   border: 3px solid #e0e0e0;
   border-radius: 5px;
+  margin-bottom: 80px;
 }
 
 .container {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  padding-top: 80px;
 }
 
 .container-params {
