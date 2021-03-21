@@ -3,18 +3,26 @@
     <div class="wrapper-content">
       <div class="content">
         <div class="search-container">
-          <v-select label="Make" solo class="search-item"></v-select>
-          <v-text-field
-            label="Min year"
+          <v-select
+            label="Make"
+            :items="makes"
             solo
+            v-model="searchData.make"
+            class="search-item"
+          ></v-select>
+          <v-text-field
+            label="Year"
+            solo
+            v-model="searchData.year"
             class="search-item"
           ></v-text-field>
           <v-text-field
-            label="Max year"
+            label="Transmission"
             solo
+            v-model="searchData.transmission"
             class="search-item"
           ></v-text-field>
-          <v-btn class="ma-2" color="#4DB6AC">
+          <v-btn class="ma-2" color="#4DB6AC" @click="search(searchData)">
             Search
           </v-btn>
         </div>
@@ -25,7 +33,7 @@
                 <template v-slot:activator>
                   <v-list-item-title>Make</v-list-item-title>
                 </template>
-                <v-list-item v-for="(make, i) in lots" :key="i" link>
+                <v-list-item v-for="(make, i) in makes" :key="i" link>
                   <v-list-item-title
                     class="item"
                     v-text="make"
@@ -35,7 +43,7 @@
             </div>
           </div>
           <div class="container-lots">
-            <car-lot :lots="allVehicles" class="car-lot" />
+            <car-lot :lots="items" :deleteBtn="deleteButton" class="car-lot" />
             <div class="text-center">
               <v-pagination
                 @input="pageChangeHandler"
@@ -53,34 +61,56 @@
 </template>
 
 <script>
-import paginationMixin from "@/mixins/pagination.mixin";
+import paginationMixin from "@/mixins/pagination.mixin.js";
 import CarLot from "../components/CarLot.vue";
 import { mapGetters, mapActions } from "vuex";
+import axios from "axios";
 
 export default {
   name: "Auctions",
-  mixins: [paginationMixin],
   components: {
     CarLot
   },
+  mixins: [paginationMixin],
   data() {
     return {
-      allVehicles: []
+      makes: [],
+      allVehicles: [],
+      deleteButton: false,
+      searchData: {
+        make: "",
+        year: "",
+        transmission: ""
+      }
     };
   },
   computed: {
-    ...mapGetters(["getInformation"])
+    ...mapGetters(["getInformation", "getSearchData"])
   },
   methods: {
-    ...mapActions(["getAllVehicles"])
+    ...mapActions(["getAllVehicles", "searchVehicle"]),
+    async search(item) {
+      console.log;
+      const response = await axios.post(
+        "content/profile/auctions/search",
+        item
+      );
+      this.allVehicles = response.data;
+      this.setupPagination(this.allVehicles);
+    }
   },
   created() {
     this.getAllVehicles().then(() => {
+      const set = new Set();
       this.allVehicles = this.getInformation;
+      this.setupPagination(this.allVehicles);
+      this.allVehicles.forEach(vehicle => {
+        set.add(vehicle.make);
+      });
+      set.forEach(value => {
+        this.makes.push(value);
+      });
     });
-  },
-  mounted() {
-    this.setupPagination(this.allVehicles);
   }
 };
 </script>

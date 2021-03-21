@@ -3,10 +3,10 @@ import _ from "lodash";
 export default {
   data() {
     return {
+      allItems: [],
       page: this.$route.query.page || 1,
       pageSize: 5,
       pageCount: 0,
-      allItems: [],
       items: []
     };
   },

@@ -8,6 +8,7 @@ import Profile from "@/views/Profile.vue";
 import AuctionsPage from "@/views/AuctionsPage.vue";
 import UserVehicles from "@/views/UserVehicles.vue";
 import NewVehicle from "@/views/NewVehicle.vue";
+import SelectedVehicle from "@/views/SelectedVehicle.vue";
 
 Vue.use(VueRouter);
 
@@ -51,6 +52,11 @@ const routes = [
         path: "newvehicle",
         name: "NewVehicle",
         component: NewVehicle
+      },
+      {
+        path: "aboutus",
+        name: "AboutUs",
+        component: SelectedVehicle
       }
     ]
   }

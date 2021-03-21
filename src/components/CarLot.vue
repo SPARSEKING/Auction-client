@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-for="lot in lots" :key="lot" class="lots">
+    <div v-for="(lot, index) in lots" :key="index" class="lots">
       <v-hover v-slot="{ hover }" open-delay="100">
         <v-card
           :elevation="hover ? 3 : 1"
@@ -11,10 +11,10 @@
           <div class="slot-container">
             <v-img
               class="image"
-              lazy-src="https://picsum.photos/id/11/10/6"
+              :lazy-src="lot.imagesSrc[0]"
               max-height="240"
               max-width="300"
-              src="https://picsum.photos/id/11/500/300"
+              :src="lot.imagesSrc[0]"
             ></v-img>
             <div class="container-info">
               <div class="title">
@@ -59,6 +59,16 @@
                 </div>
               </div>
             </div>
+            <v-chip
+              v-if="deleteBtn === true"
+              class="ma-2 delete-button"
+              color="teal"
+              outlined
+              pill
+              @click="removeVehicle(lots[index])"
+            >
+              <span>Delete</span>
+            </v-chip>
           </div>
         </v-card>
       </v-hover>
@@ -67,15 +77,16 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   name: "CarLot",
-  data() {
-    return {
-      dateRangeText: "26.03.2018"
-    };
-  },
   props: {
-    lots: Array
+    lots: Array,
+    deleteBtn: Boolean
+  },
+  methods: {
+    ...mapActions(["removeVehicle"])
   }
 };
 </script>

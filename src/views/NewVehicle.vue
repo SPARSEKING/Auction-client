@@ -5,9 +5,9 @@
         <div class="veh-content">
           <v-carousel hide-delimiters height="330">
             <v-carousel-item
-              v-for="(item, i) in items"
+              v-for="(item, i) in newVehicle.imagesSrc"
               :key="i"
-              :src="item.src"
+              :src="item"
             ></v-carousel-item>
           </v-carousel>
           <div class="upload-photo">
@@ -71,7 +71,7 @@
               class="ma-2 add-info"
               outlined
               color="#4DB6AC"
-              @click="setInformation(newVehicle)"
+              @click="setInformation({ newVehicle, images })"
             >
               Add Vehicle
             </v-btn>
@@ -96,34 +96,23 @@ export default {
         transmission: "",
         location: "",
         date: "",
-        price: ""
+        price: "",
+        imagesSrc: []
       },
-      items: [
-        {
-          src: "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg"
-        },
-        {
-          src: "https://cdn.vuetifyjs.com/images/carousel/sky.jpg"
-        },
-        {
-          src: "https://cdn.vuetifyjs.com/images/carousel/bird.jpg"
-        },
-        {
-          src: "https://cdn.vuetifyjs.com/images/carousel/planet.jpg"
-        }
-      ]
+      images: []
     };
   },
   methods: {
     ...mapActions(["setInformation"]),
     onFileSelected(event) {
       const file = event.target.files[0];
+
       const reader = new FileReader();
       reader.onload = () => {
-        this.changedData.imageSrc = reader.result;
+        this.newVehicle.imagesSrc.push(reader.result);
       };
       reader.readAsDataURL(file);
-      this.image = file;
+      this.images.push(file);
     },
     triggerUpload() {
       this.$refs.fileInput.click();

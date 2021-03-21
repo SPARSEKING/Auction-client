@@ -17,38 +17,51 @@
         </div>
         <hr class="v-line" />
       </div>
-      <car-lot :lots="userVehicles" class="user-lots" />
+      <car-lot :lots="items" :deleteBtn="deleteButton" class="user-lots" />
       <h2 v-if="userVehicles.length === 0" class="no-auctions">
         You have no auctions at the moment
       </h2>
+      <div class="text-center">
+        <v-pagination
+          @input="pageChangeHandler"
+          v-model="page"
+          :length="pageCount"
+          :total-visible="7"
+          color="#b2dfdb"
+        ></v-pagination>
+      </div>
     </div>
   </v-app>
 </template>
 
 <script>
 import CarLot from "@/components/CarLot.vue";
+import paginationMixin from "@/mixins/pagination.mixin.js";
 import { mapGetters, mapActions } from "vuex";
 
 export default {
   components: { CarLot },
+  mixins: [paginationMixin],
   name: "MyVehicles",
   data() {
     return {
       createModal: {
         show: false
       },
-      userVehicles: []
+      userVehicles: [],
+      deleteButton: true
     };
   },
   computed: {
-    ...mapGetters(["getInformation"])
+    ...mapGetters(["getUserVehicles"])
   },
   methods: {
     ...mapActions(["getVehicle"])
   },
   created() {
     this.getVehicle().then(() => {
-      this.userVehicles = this.getInformation;
+      this.userVehicles = this.getUserVehicles;
+      this.setupPagination(this.userVehicles);
     });
   }
 };

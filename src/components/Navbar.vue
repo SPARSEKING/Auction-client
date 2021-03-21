@@ -7,11 +7,12 @@
     >
       <h1>AutoSale</h1>
       <div>
-        <v-btn class="color: white">
-          <span>About Us</span>
-
-          <v-icon>mdi-domain</v-icon>
-        </v-btn>
+        <router-link :to="{ name: 'AboutUs' }" append>
+          <v-btn class="color: white">
+            <span>About Us</span>
+            <v-icon>mdi-domain</v-icon>
+          </v-btn>
+        </router-link>
 
         <router-link :to="{ name: 'Auctions' }" append>
           <v-btn class="color: white">
@@ -20,7 +21,7 @@
           </v-btn>
         </router-link>
 
-        <router-link :to="{ name: 'MyVehicles' }" append>
+        <router-link :to="{ name: 'MyVehicles' }" append v-if="seller">
           <v-btn class="color: white">
             <span>My vehicles</span>
             <v-icon>mdi-home</v-icon>
@@ -53,7 +54,8 @@ export default {
   data() {
     return {
       value: "recent",
-      userName: ""
+      userName: "",
+      seller: false
     };
   },
   methods: {
@@ -64,7 +66,8 @@ export default {
   },
   async created() {
     const getName = await JSON.parse(localStorage.getItem("UserData"));
-    this.userName = getName.userLogin;
+    this.userName = getName.userData.login;
+    this.seller = getName.userData.seller;
   }
 };
 </script>

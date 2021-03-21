@@ -3,11 +3,10 @@ import { getters } from "./getters";
 import { mutations } from "./mutations";
 
 export const state = {
-  newVehicle: null,
-  userVehicle: null
+  searchData: null
 };
 
-export const newVehicle = {
+export const auctions = {
   state,
   getters,
   actions,

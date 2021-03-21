@@ -4,6 +4,7 @@ import { signIn } from "./modules/signIn/index";
 import { signUp } from "./modules/signUp/index";
 import { profile } from "./modules/profile/index";
 import { newVehicle } from "./modules/vehicle/index";
+import { auctions } from "./modules/auctions/index";
 
 Vue.use(Vuex);
 
@@ -12,6 +13,7 @@ export default new Vuex.Store({
     signIn,
     signUp,
     profile,
-    newVehicle
+    newVehicle,
+    auctions
   }
 });
