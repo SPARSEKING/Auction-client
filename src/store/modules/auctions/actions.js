@@ -7,6 +7,6 @@ export const actions = {
       "content/profile/auctions/search",
       payload
     );
-    commit("searchVehicle", response.data);
+    commit("setInformation", response.data);
   }
 };

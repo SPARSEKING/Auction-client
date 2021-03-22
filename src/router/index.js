@@ -53,9 +53,14 @@ const routes = [
         name: "NewVehicle",
         component: NewVehicle
       },
+      // {
+      //   path: "aboutus",
+      //   name: "AboutUs",
+      //   component: SelectedVehicle
+      // },
       {
-        path: "aboutus",
-        name: "AboutUs",
+        path: "auctions/:id",
+        name: "SelectedVehicle",
         component: SelectedVehicle
       }
     ]

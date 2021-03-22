@@ -4,7 +4,11 @@
       <div class="wrapper-content">
         <div class="slider">
           <v-carousel hide-delimiters height="660">
-            <v-carousel-item :key="i" :src="item"></v-carousel-item>
+            <v-carousel-item
+              v-for="(image, i) in auction.imagesSrc"
+              :key="i"
+              :src="image"
+            ></v-carousel-item>
           </v-carousel>
         </div>
         <div class="auction-info">
@@ -12,30 +16,40 @@
           <p class="title">AUCTION DATA</p>
           <div class="info-item">
             <p>Make</p>
-            <p><b>BMW</b></p>
+            <p>
+              <b>{{ auction.make }}</b>
+            </p>
           </div>
           <div class="info-item">
             <p>Model</p>
-            <p><b>M8</b></p>
+            <p>
+              <b>{{ auction.model }}</b>
+            </p>
           </div>
           <div class="info-item">
             <p>Year</p>
-            <p><b>2020</b></p>
+            <p>
+              <b>{{ auction.year }}</b>
+            </p>
           </div>
           <div class="info-item">
             <p>Miles</p>
-            <p><b>1000</b></p>
+            <p>
+              <b>{{ auction.miles }}</b>
+            </p>
           </div>
           <div class="info-item">
             <p>Transmission</p>
-            <p><b>Automat</b></p>
+            <p>
+              <b>{{ auction.transmission }}</b>
+            </p>
           </div>
         </div>
         <div class="pay-info">
           <p class="title">CURRENT PRICE</p>
           <div class="item">
             <p class="sale">Current price:</p>
-            <h1 class="sale price">228$</h1>
+            <h1 class="sale price">{{ auction.price }}$</h1>
           </div>
           <p class="sale">Sale Status</p>
           <p class="sale"><b>on minimum bid</b></p>
@@ -43,11 +57,15 @@
           <p class="sale-details title">SALE DETAILS</p>
           <div class="item">
             <p class="sale">Location</p>
-            <p class="sale"><b>Minsk</b></p>
+            <p class="sale">
+              <b>{{ auction.location }}</b>
+            </p>
           </div>
           <div class="item-date">
             <p class="sale">Auction date</p>
-            <p class="sale"><b>26.03.2021</b></p>
+            <p class="sale">
+              <b>{{ auction.date }}</b>
+            </p>
           </div>
           <v-btn class="ma-2" outlined color="#00897b">
             Bind now
@@ -59,10 +77,25 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "AboutUs",
   data() {
-    return {};
+    return {
+      auction: null
+    };
+  },
+  computed: {
+    ...mapGetters(["getInformation"])
+  },
+  created() {
+    const auction = this.getInformation.find(
+      auction => auction._id == this.$route.params.id
+    );
+    if (auction) {
+      this.auction = auction;
+    }
   }
 };
 </script>

@@ -64,7 +64,7 @@
 import paginationMixin from "@/mixins/pagination.mixin.js";
 import CarLot from "../components/CarLot.vue";
 import { mapGetters, mapActions } from "vuex";
-import axios from "axios";
+// import axios from "axios";
 
 export default {
   name: "Auctions",
@@ -89,14 +89,11 @@ export default {
   },
   methods: {
     ...mapActions(["getAllVehicles", "searchVehicle"]),
-    async search(item) {
-      console.log;
-      const response = await axios.post(
-        "content/profile/auctions/search",
-        item
-      );
-      this.allVehicles = response.data;
-      this.setupPagination(this.allVehicles);
+    search(auction) {
+      this.searchVehicle(auction).then(() => {
+        this.allVehicles = this.getInformation;
+        this.setupPagination(this.allVehicles);
+      });
     }
   },
   created() {
