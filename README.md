@@ -7,31 +7,31 @@ yarn/npm run serve
 
 ### Main page
 
-![Main page](/Users/kirill/Desktop/main-page.png)
+![Main page](./photos_readme/main-page.png)
 
 ### Sign up page
 
-![Sign up page](/Users/kirill/Desktop/sign-up.png)
+![Sign up page](./photos_readme/sign-up.png)
 
 ### Sign in page
 
-![Sign in page](/Users/kirill/Desktop/sign-in.png)
+![Sign in page](./photos_readme/sign-in.png)
 
 ### Auctions page
 
-![Auctions page](/Users/kirill/Desktop/Auctions-page.png)
+![Auctions page](./photos_readme/Auctions-page.png)
 
 ### Selected auction page
 
-![Selected auction page](/Users/kirill/Desktop/selected-auction.png)
+![Selected auction page](./photos_readme/selected-auction.png)
 
 ### Profile page
 
-![Profile page](/Users/kirill/Desktop/profile.png)
+![Profile page](./photos_readme/profile.png)
 
 ### User auctions page
 
-![User auctions page](/Users/kirill/Desktop/user-auctions.png)
+![User auctions page](./photos_readme/user-auctions.png)
 
 ### Add new auction page
 
@@ -39,5 +39,5 @@ yarn/npm run serve
 
 ### Contact page
 
-![Contact page](/Users/kirill/Desktop/contact.png)
+![Contact page](./photos_readme/contact.png)
 
