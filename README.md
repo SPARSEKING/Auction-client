@@ -35,7 +35,7 @@ yarn/npm run serve
 
 ### Add new auction page
 
-![New auction page](/Users/kirill/Desktop/add-vehicle.png)
+![New auction page](./photos_readme/add-vehicle.png)
 
 ### Contact page
 
