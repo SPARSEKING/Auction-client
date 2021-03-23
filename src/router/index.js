@@ -9,6 +9,7 @@ import AuctionsPage from "@/views/AuctionsPage.vue";
 import UserVehicles from "@/views/UserVehicles.vue";
 import NewVehicle from "@/views/NewVehicle.vue";
 import SelectedVehicle from "@/views/SelectedVehicle.vue";
+import Contact from "@/views/Contact.vue";
 
 Vue.use(VueRouter);
 
@@ -53,11 +54,11 @@ const routes = [
         name: "NewVehicle",
         component: NewVehicle
       },
-      // {
-      //   path: "aboutus",
-      //   name: "AboutUs",
-      //   component: SelectedVehicle
-      // },
+      {
+        path: "contact",
+        name: "Contact",
+        component: Contact
+      },
       {
         path: "auctions/:id",
         name: "SelectedVehicle",
@@ -76,9 +77,24 @@ const router = new VueRouter({
 router.beforeEach(function(to, _from, next) {
   if (to.path === "/content") {
     if (localStorage.getItem("UserData")) {
-      next();
+      next("/content/contact");
     } else {
       next("/");
+    }
+    next();
+  } else if (to.path === "/content/vehicles") {
+    const user = JSON.parse(localStorage.getItem("UserData"));
+    if (user.userData.seller == true) {
+      next();
+    } else {
+      next("/content/contact");
+    }
+    next();
+  } else if (to.path === "/signup" || to.path === "/signin") {
+    if (localStorage.getItem("UserData")) {
+      next("/content/contact");
+    } else {
+      next();
     }
     next();
   }

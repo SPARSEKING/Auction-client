@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div class="navbar">
-      <h1 class="logo">Logo</h1>
+      <h1 class="logo">AutoSale</h1>
     </div>
     <div class="wrapper-content">
       <div class="wrapper-links">

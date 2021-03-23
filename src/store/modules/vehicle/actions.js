@@ -14,7 +14,6 @@ export const actions = {
         await axios.put("content/profile/newvehicle/images", postData);
       });
     }
-    console.log(response);
     commit("changeInformation", response.data);
   },
   async getAllVehicles({ commit }) {
@@ -26,7 +25,6 @@ export const actions = {
     commit("setUserVehicles", response.data);
   },
   async removeVehicle({ commit }, payload) {
-    console.log(payload);
     const response = await axios.delete(
       "content/profile/myvehicle/" + payload._id
     );

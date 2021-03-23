@@ -64,7 +64,6 @@
 import paginationMixin from "@/mixins/pagination.mixin.js";
 import CarLot from "../components/CarLot.vue";
 import { mapGetters, mapActions } from "vuex";
-// import axios from "axios";
 
 export default {
   name: "Auctions",

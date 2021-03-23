@@ -12,7 +12,6 @@ export const actions = {
   },
   async autoLogin({ commit }) {
     const userData = await JSON.parse(localStorage.getItem("UserData") || "");
-    console.log(userData.token);
     if (userData && userData.token) {
       userData.redirect = true;
       commit("signIn", userData);

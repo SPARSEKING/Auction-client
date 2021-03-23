@@ -67,7 +67,7 @@
               <b>{{ auction.date }}</b>
             </p>
           </div>
-          <v-btn class="ma-2" outlined color="#00897b">
+          <v-btn class="ma-2" outlined color="#00897b" @click="bindPrice">
             Bind now
           </v-btn>
         </div>
@@ -77,10 +77,10 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
-  name: "AboutUs",
+  name: "SelectedVehicle",
   data() {
     return {
       auction: null
@@ -88,6 +88,9 @@ export default {
   },
   computed: {
     ...mapGetters(["getInformation"])
+  },
+  methods: {
+    ...mapActions(["bindPrice"])
   },
   created() {
     const auction = this.getInformation.find(

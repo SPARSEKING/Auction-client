@@ -2,7 +2,7 @@
   <v-app>
     <div class="wrapper">
       <div class="navbar">
-        <h1 class="logo">Logo</h1>
+        <h1 class="logo">AutoSale</h1>
       </div>
       <div class="container">
         <div></div>
@@ -97,9 +97,6 @@ export default {
     signUp(newUser) {
       this.$store.dispatch("signUp", newUser);
       this.newUser.login = this.newUser.email = this.newUser.password = "";
-    },
-    validate() {
-      this.$refs.form.validate();
     }
   }
 };

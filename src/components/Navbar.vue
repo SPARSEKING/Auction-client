@@ -7,9 +7,9 @@
     >
       <h1>AutoSale</h1>
       <div>
-        <router-link :to="{ name: 'AboutUs' }" append>
+        <router-link :to="{ name: 'Contact' }" append>
           <v-btn class="color: white">
-            <span>About Us</span>
+            <span>Contact</span>
             <v-icon>mdi-domain</v-icon>
           </v-btn>
         </router-link>
@@ -64,8 +64,8 @@ export default {
       localStorage.removeItem("UserData");
     }
   },
-  async created() {
-    const getName = await JSON.parse(localStorage.getItem("UserData"));
+  created() {
+    const getName = JSON.parse(localStorage.getItem("UserData"));
     this.userName = getName.userData.login;
     this.seller = getName.userData.seller;
   }
